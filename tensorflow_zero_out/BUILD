@@ -2,6 +2,18 @@ licenses(["notice"])  # Apache 2.0
 
 package(default_visibility = ["//visibility:public"])
 
+cc_library(
+    name = "helper",
+    srcs = ["cc/kernels/helper.cc"],
+    hdrs = ["cc/kernels/helper.h"],
+    deps = [
+         "@com_google_absl//absl/strings",
+       # Without the below I get Error 1:
+        "@com_google_absl//absl/container:inlined_vector",
+        "@com_google_absl//absl/types:optional",
+    ],
+)
+
 cc_binary(
     name = 'python/ops/_zero_out_ops.so',
     srcs = [
@@ -10,6 +22,7 @@ cc_binary(
     ],
     linkshared = 1,
     deps = [
+        ":helper",
         "@local_config_tf//:libtensorflow_framework",
         "@local_config_tf//:tf_header_lib",
     ],

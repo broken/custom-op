@@ -14,6 +14,7 @@ limitations under the License.
 ==============================================================================*/
 
 #include "tensorflow/core/framework/op_kernel.h"
+#include "tensorflow_zero_out/cc/kernels/helper.h"
 
 using namespace tensorflow;
 
@@ -35,7 +36,11 @@ class ZeroOutOp : public OpKernel {
     // Set all but the first element of the output tensor to 0.
     const int N = input.size();
     for (int i = 1; i < N; i++) {
-      output_flat(i) = 0;
+      if (IsEmpty("")) {
+        output_flat(i) = 0;
+      } else {
+        output_flat(i) = 2;
+      }
     }
 
     // Preserve the first input value if possible.
