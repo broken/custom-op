@@ -7,10 +7,12 @@ cc_library(
     srcs = ["cc/kernels/helper.cc"],
     hdrs = ["cc/kernels/helper.h"],
     deps = [
+        "@com_google_sentencepiece//src:sentencepiece_processor",
          "@com_google_absl//absl/strings",
        # Without the below I get Error 1:
-        "@com_google_absl//absl/container:inlined_vector",
-        "@com_google_absl//absl/types:optional",
+        #"@com_google_absl//absl/container:inlined_vector",
+        #"@com_google_absl//absl/types:optional",
+
     ],
 )
 
