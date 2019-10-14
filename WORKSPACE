@@ -2,6 +2,18 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 load("//tf:tf_configure.bzl", "tf_configure")
 load("//gpu:cuda_configure.bzl", "cuda_configure")
 
+
+http_archive(
+    name = "bazel_skylib",
+    sha256 = "2c62d8cd4ab1e65c08647eb4afe38f51591f43f7f0885e7769832fa137633dcb",
+    strip_prefix = "bazel-skylib-0.7.0",
+    urls = [
+        # tag 0.7.0 resolves to commit 6741f733227dc68137512161a5ce6fcf283e3f58 (2019-02-08 18:37:26 +0100)
+        "http://mirror.tensorflow.org/github.com/bazelbuild/bazel-skylib/archive/0.7.0.tar.gz",
+        "https://github.com/bazelbuild/bazel-skylib/archive/0.7.0.tar.gz",
+    ],
+)
+
 http_archive(
     name = "com_google_absl",
     sha256 = "0b62fc2d00c2b2bc3761a892a17ac3b8af3578bd28535d90b4c914b0a7460d4e",
@@ -28,19 +40,19 @@ PROTOBUF_URLS = [
 PROTOBUF_SHA256 = "2244b0308846bb22b4ff0bcc675e99290ff9f1115553ae9671eba1030af31bc0"
 PROTOBUF_STRIP_PREFIX = "protobuf-3.6.1.2"
 
-http_archive(
-  name = "com_google_protobuf",
-  sha256 = PROTOBUF_SHA256,
-  strip_prefix = PROTOBUF_STRIP_PREFIX,
-  urls = PROTOBUF_URLS,
-)
+#http_archive(
+#  name = "com_google_protobuf",
+#  sha256 = PROTOBUF_SHA256,
+#  strip_prefix = PROTOBUF_STRIP_PREFIX,
+#  urls = PROTOBUF_URLS,
+#)
 
-http_archive(
-  name = "com_google_protobuf_cc",
-  sha256 = PROTOBUF_SHA256,
-  strip_prefix = PROTOBUF_STRIP_PREFIX,
-  urls = PROTOBUF_URLS,
-)
+#http_archive(
+#  name = "com_google_protobuf_cc",
+#  sha256 = PROTOBUF_SHA256,
+#  strip_prefix = PROTOBUF_STRIP_PREFIX,
+#  urls = PROTOBUF_URLS,
+#)
 
 http_archive(
     name = "com_google_googletest",
@@ -59,6 +71,9 @@ http_archive(
     urls = [
         "https://github.com/google/sentencepiece/archive/1.0.0.zip"
     ],
+    repo_mapping = {
+        "@com_google_protobuf" : "@local_config_tf",
+    },
 )
 
 # required by glog
